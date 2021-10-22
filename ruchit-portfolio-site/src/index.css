@@ -75,7 +75,7 @@ body {
 	width: 10px;
 }
 #field.dark::-webkit-scrollbar-thumb {
-	background-color: #333444;
+	background-color: #000000;
 }
 #field.light::-webkit-scrollbar-thumb {
 	background-color: #ACA9BB;
@@ -105,7 +105,7 @@ body {
 }
 @keyframes blink-dark {
   0%, 100% {
-    background-color: #F4F4F4;
+    background-color: #00ff37;
   }
   50% {
     background-color: transparent;

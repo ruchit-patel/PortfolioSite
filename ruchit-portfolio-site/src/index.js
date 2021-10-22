@@ -6,9 +6,9 @@ import './index.css';
 const App = () => {
     const [theme, setTheme] = React.useState('dark');
     const themeVars = theme === 'dark' ? {
-      app: { backgroundColor: '#333444' },
+      app: { backgroundColor: '#000000' },
       terminal: { boxShadow: '0 2px 5px #111' },
-      field: { backgroundColor: '#222333', color: '#F4F4F4', fontWeight: 'normal' },
+      field: { backgroundColor: '#222333', color: '#FFFFFF', fontWeight: 'normal' },
       cursor: { animation: '1.02s blink-dark step-end infinite' } } :
     {
       app: { backgroundColor: '#ACA9BB' },
@@ -22,15 +22,13 @@ const App = () => {
   
   };
   const Terminal = ({ theme, setTheme }) => {
-    const [maximized, setMaximized] = React.useState(false);
     const [title, setTitle] = React.useState('Ruchit Terminal');
-  
     return /*#__PURE__*/React.createElement("div", { id: "terminal", style: { height: '100vh', width: '100vw', maxWidth: '100vw' } }, /*#__PURE__*/
     React.createElement("div", { id: "window", style: theme.window }, /*#__PURE__*/
     React.createElement("span", { id: "title", style: { color: "#FFFFFF" } }, title)), /*#__PURE__*/
   
     React.createElement(Field, { theme: theme, setTheme: setTheme, setTitle: setTitle }));
-  
+    
   };
   class Field extends React.Component {
     constructor(props) {
@@ -141,16 +139,14 @@ const App = () => {
   
       }
   
-      const userElem = document.querySelector('#field');
-  
-      // userElem.focus()
-  
+      document.querySelector('#field').focus();
     }
+
     componentDidUpdate() {
       const userElem = document.querySelector('#field');
-  
       userElem.scrollTop = userElem.scrollHeight;
     }
+
     handleTyping(e) {
       e.preventDefault();
   
@@ -308,7 +304,7 @@ const App = () => {
       } else if (cmd === 'cmd') {
         return this.setState(state => ({
           fieldHistory: [...state.fieldHistory, { text: 'Launching new instance of the Ruchit Terminal...', hasBuffer: true }] }),
-        () => window.open('https://www.google.com'));
+        () => window.open('https://ruchit.dev'));
       } else if (cmd === 'theme') {
         const { setTheme } = this.props;
   
@@ -331,12 +327,6 @@ const App = () => {
   
       } else if (cmd === 'about') {
         return this.setState(state => ({
-          // fieldHistory: [...state.fieldHistory, { text: [
-          //   'Hey there!',
-          //   `I am Ruchit, a software engineer from Vadodara, India with expertise in dotnet Core web applications. I am a tech enthusiast and a curious learner for life. Currently ready to work with you on any freelance projects.`,
-          //   `Type CONTACT if you'd like to get in touch - otherwise I hope you enjoy using the rest of the app!`,
-          //   '<Image>./pp.jfif',
-          //   '<a>Have a look at my resume here! <src> https://www.google.com'],
           fieldHistory: [...state.fieldHistory, {
             hasBuffer: true,
             isReactJSXForm: "about" }] }));
@@ -361,82 +351,87 @@ const App = () => {
         return this.setState(state => ({
           fieldHistory: [...state.fieldHistory, { text: [
             'Languages:',
+            'C#',
             'HTML',
             'CSS',
             'JavaScript',
+            'Java',
+            'Python',
+            'SQL',
             '',
             'Libraries/Frameworks:',
-            'Node',
-            'Express',
+            'dotNet Core',
             'React',
-            'Next',
-            'React Native',
-            'Redux',
+            'JQuery',
+            'Entity Framework',
+            'Identity Framework',
+            'Bootstrap',
             'jQuery',
             '',
             'Other:',
             'Git',
             'GitHub',
-            'Heroku',
-            'CodePen',
-            'CodeSandBox',
-            'Firebase',
-            'NeDB'],
+            'Azure Devops',
+            'Docker',
+            'REST API',
+            'ML .NET',
+            'RabbitMQ',
+            'Swagger',
+            ''],
             hasBuffer: true }] }));
   
       } else if (cmd === 'contact') {
         return this.setState(state => ({
           fieldHistory: [...state.fieldHistory, { text: [
-            'Email: contact@Ruchitlockett.com',
-            'Website: Ruchitlockett.com',
-            'LinkedIn: @Ruchitlockett',
-            'GitHub: @huntinghawk1415',
-            'CodePen: @HuntingHawk'],
+            'Email: mail@ruchit.dev',
+            'Website: https://ruchit.dev',
+            'LinkedIn: ruchit-patel-a80888159',
+            'GitHub: @ruchit-patel'],
             hasBuffer: true }] }));
   
       } else if (cmd === 'projects') {
         return this.setState(state => ({
           fieldHistory: [...state.fieldHistory, { text: [
-            'To view any of these projects live or their source files, type PROJECT <TITLE>, e.g. PROJECT Minesweeper.',
+            'To view any of these projects live or their source files, type PROJECT <TITLE>, e.g. PROJECT BillingNext.',
             '',
-            'Minesweeper',
-            'Built with React',
-            `Some time ago I because increasingly addicted to minesweeper, specifically the version offered by Google. In fact, I was so addicted that I decided to build the damn thing.`,
+            'BillingNextSys',
+            'Built with DotNetCore, JQuery and lots of dedication',
+            `BillingNext is a multi tenant scalable billing web application for generating GST invoices / non-GST challan and sharing them and also handling basic accounting tasks, CRM activities and much more.`,
             '',
-            'PuniUrl',
-            'Built with Express, Firebase',
-            'Ever heard of TinyUrl? Ever been to their website? Atrocious. So I made my own version of it.',
+            'QuotationGen',
+            'Built with DotNetCore, JQuery and lots of love',
+            'Quotation Gen is high performance dotnet Core Web Application to generate and share quotation on the go with pure JavaScript/HTML5 as frontend tech.',
             '',
-            'Taggen',
+            'NUVAdmissionSystem',
+            'Built with DotNetCore and Javascripts',
+            'NUV Admission System allows students to apply for admission at a University via a web app made with dotnet Core.',
+            '',
+            'BlockChainJS',
             'Built with Node',
-            `I was building a MS Excel spreadsheet parser (haven't finished it, imagine my stove has 10 rows of backburners) and needed a way to generate non-opinionated XML files. There were projects out there that came close, but I decided it would be fun to build it on my own.`,
+            'Made a Proof of Concept in NodeJS for blockchain technology. It demonstrates how a genesis block origins and how to mine blocks.',
             '',
-            'Forum',
-            'Built with React, Redux, Bootstrap',
-            `This was a project I had to build for my final while taking Udacity's React Nanodegree certification course. It's an app that tracks posts and comments, likes, etc. Nothing too complicated, except for Redux... God I hate Redux.`,
-            '',
-            'Simon',
-            'Built with vanilla ice cream',
-            'The classic Simon memory game. I originally built this for the freeCodeCamp legacy certification, but later came back to it because I hated how bad I was with JavaScript at the time. I also wanted to see how well I could build it during a speed-coding session. Just over an hour.'],
+            'Nirvan3d',
+            'Currently Building with BabylonJS',
+            '3D Simulation Software for Furniture Industry'],
             hasBuffer: true }] }));
   
       } else if (cmd === 'project') {
         if (params.length === 1) {
           const projects = [{
-            title: 'minesweeper',
-            live: 'https://codepen.io/HuntingHawk/full/GRgLWKV' },
+            title: 'BillingNextSys',
+            live: 'https://billingnextsys.azurewebsites.net/' },
           {
-            title: 'puniurl',
-            live: 'http://www.puniurl.com/' },
+            title: 'QuotationGen',
+            live: 'https://github.com/BillingNext/QuotationGen' },
           {
-            title: 'taggen',
-            live: 'https://github.com/huntinghawk1415/Taggen' },
+            title: 'NUVAdmissionSystem',
+            live: 'https://github.com/Amorpheuz/AdmissionSysMain' },
           {
-            title: 'forum',
-            live: 'https://github.com/huntinghawk1415/ReactND-Readable' },
+            title: 'BlockChainJS',
+            live: 'https://github.com/ruchit-patel/BlockChainJS' },
           {
-            title: 'simon',
-            live: 'https://codepen.io/HuntingHawk/full/mNPVgj' }];
+            title: 'Nirvan3d',
+            live: 'https://github.com/ruchit-patel/Nirvan3d' }];
   
   
           return this.setState(state => ({
