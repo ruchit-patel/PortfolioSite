@@ -334,17 +334,18 @@ const App = () => {
       } else if (cmd === 'experience') {
         return this.setState(state => ({
           fieldHistory: [...state.fieldHistory, { text: [
-            'Certificates:',
-            'ReactJS...............................Udacity',
-            'Front-end Development.................freeCodeCamp',
-            'JS Algorithms and Data Structures.....freeCodeCamp',
-            'Front-end Libraries...................freeCodeCamp',
-            'Responsive Web Design.................freeCodeCamp',
-            '',
             'Work:',
-            'Shugoll Research',
-            'Database Technician',
-            'June 2015 - Present'],
+            'Allscripts India LLP',
+            'Associate Software Engineer',
+            'September 2020 - Present',
+            '',
+            'Mindpool Technologies - Deployed at Allscripts',
+            'Software Developer – Intern',
+            'November 2019 - September 2020',
+            '',
+            'TraxBee IoT Solutions',
+            'Software Developer',
+            'April 2019 - November 2019'],
             hasBuffer: true }] }));
   
       } else if (cmd === 'skills') {
@@ -419,7 +420,7 @@ const App = () => {
         if (params.length === 1) {
           const projects = [{
             title: 'BillingNextSys',
-            live: 'https://billingnextsys.azurewebsites.net/' },
+            live: 'https://billingnextsys.azurewebsites.net' },
           {
             title: 'QuotationGen',
             live: 'https://github.com/BillingNext/QuotationGen' },
@@ -434,9 +435,9 @@ const App = () => {
             live: 'https://github.com/ruchit-patel/Nirvan3d' }];
   
   
-          return this.setState(state => ({
-            fieldHistory: [...state.fieldHistory, { text: `Launching ${params[0]}...`, hasBuffer: true }] }),
-          () => window.open(projects.filter(s => s.title === params[0])[0].live));
+            return this.setState(state => ({
+              fieldHistory: [...state.fieldHistory, { text: `Launching ${params[0]}...`, hasBuffer: true }] }),
+              () => window.open(projects.filter(s => s.title === params[0])[0].live));
         }
   
         return this.setState(state => ({
