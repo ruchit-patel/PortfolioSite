@@ -423,7 +423,7 @@ const App = () => {
             live: 'https://billingnextsys.azurewebsites.net' },
           {
             title: 'QuotationGen',
-            live: 'https://github.com/BillingNext/QuotationGen' },
+            live: 'https://billingnextquotation.azurewebsites.net' },
           {
             title: 'NUVAdmissionSystem',
             live: 'https://github.com/Amorpheuz/AdmissionSysMain' },
@@ -433,12 +433,21 @@ const App = () => {
           {
             title: 'Nirvan3d',
             live: 'https://github.com/ruchit-patel/Nirvan3d' }];
-  
-  
-            return this.setState(state => ({
-              fieldHistory: [...state.fieldHistory, { text: `Launching ${params[0]}...`, hasBuffer: true }] }),
-              () => window.open(projects.filter(s => s.title === params[0])[0].live));
-        }
+
+            var projecttolaunch = projects.filter(s => s.title.toLowerCase() === params[0]);
+            if(projecttolaunch.length===0)
+            {
+              return this.setState(state => ({
+                fieldHistory: [...state.fieldHistory, { text: `No such project as ${params[0]} found in portfolio.`, hasBuffer: true }] })
+              )
+            }
+            else{
+              return this.setState(state => ({
+                fieldHistory: [...state.fieldHistory, { text: `Launching ${params[0]}...`, hasBuffer: true }]}),
+                ()=>window.open(projecttolaunch[0].live)
+              )
+            }
+            }
   
         return this.setState(state => ({
           fieldHistory: [...state.fieldHistory, this.giveError('bp', { cmd: 'PROJECT', noAccepted: 1 })] }));
