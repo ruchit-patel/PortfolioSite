@@ -2,13 +2,7 @@ import React, { createElement } from 'react';
 import ReactDOM from 'react-dom';
 import {evaluate, sec} from 'mathjs';
 import Typewriter from 'typewriter-effect/dist/core';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, Stack, Grid, Typography, CardMedia, CardContent, Card, Alert, AlertTitle } from '@mui/material';
 import './index.css';
 
 const App = () => {
@@ -16,7 +10,7 @@ const App = () => {
     const themeVars = theme === 'dark' ? {
       app: { backgroundColor: '#000000' },
       terminal: { boxShadow: '0 2px 5px #111' },
-      field: { backgroundColor: '#222333', color: '#FFFFFF', fontWeight: 'normal' },
+      field: { backgroundColor: '#0A1929', color: '#FFFFFF', fontWeight: 'normal' },
       cursor: { animation: '1.02s blink-dark step-end infinite' } } :
     {
       app: { backgroundColor: '#ACA9BB' },
@@ -140,12 +134,10 @@ const App = () => {
         this.setState(state => ({
           isMobile: true,
           fieldHistory: [...state.fieldHistory, { isCommand: true }, {
-            text: `Terminal Mode with keyboard input is not supported on mobile devices. Switch to desktop for keyboard input. Or use the links to navigate through the information`,
+            text: `Mobile`,
             isError: true,
             hasBuffer: true,
             elementType: "mobile" }] }));
-  
-  
       }
   
       document.querySelector('#field').focus();
@@ -513,7 +505,7 @@ const App = () => {
         if(elementType)
         {
           if(elementType==="mobile"){
-            return null;//<MobileRender onClick={(sectionToLoad) => this.handleClick(sectionToLoad)} />;
+            return <MobileModeWarning/>;
           }
           //else{
            return /*#__PURE__*/(
@@ -570,7 +562,8 @@ const MultiTextWithImage = ({ input, isError, hasBuffer, elementType }) => /*#__
                     spacing={0}
                     direction="column"
                     alignItems="center"
-                    justify="center">
+                    justify="center"
+                    style={{marginBottom: 20 + 'px'}}>
 
                 <Grid item xs={3}> 
                     <Card sx={{ maxWidth: 700 }}>
@@ -586,7 +579,7 @@ const MultiTextWithImage = ({ input, isError, hasBuffer, elementType }) => /*#__
                         Hey there! I'm Ruchit Patel
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          A software engineer from Vadodara, India with expertise in dotnet Core web applications.
+                          A software engineer from Vadodara, India. Having expertise in dotnet Core web applications.
                           I am a tech enthusiast and a curious learner for life. As a full time software engineer i work with Allscripts India, and currently ready to work with you on any freelance projects.
                         </Typography>
                       </CardContent>
@@ -603,22 +596,31 @@ const MultiTextWithImage = ({ input, isError, hasBuffer, elementType }) => /*#__
     }
   }
 
+  class MobileModeWarning extends React.Component{
+    render(){
+      return(<div>
+        <Alert severity="info" >
+            <AlertTitle>Terminal Mode not supported</AlertTitle>
+            Terminal Mode with keyboard input is not supported on mobile devices.Switch to desktop for full experience of this site. Or use the <strong>tabs below</strong> to navigate through the information.
+          </Alert>
+      </div>);
+    }
+  }
   class MobileRender extends React.Component {
     render()
     {
       return (
-        <div>
-          <h3>Terminal Mode with keyboard input is not supported on mobile devices. Switch to desktop for keyboard input. Or use the tabs below to navigate through the information</h3>
+        <div style={{marginTop: 20 + 'px'}}>
           <Stack spacing={1}>
             <Stack direction="row" spacing={1} justifyContent="space-evenly">
-              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("About")}>About</Button>
-              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("Experience")}>Experience</Button>
-              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("Skills")}>Skills</Button>
+              <Button variant="outlined" color="info" size="medium" onClick={() => this.props.onClick("About")}>About</Button>
+              <Button variant="outlined" color="info" size="medium" onClick={() => this.props.onClick("Experience")}>Experience</Button>
+              <Button variant="outlined" color="info" size="medium" onClick={() => this.props.onClick("Skills")}>Skills</Button>
             </Stack>
 
             <Stack direction="row" justifyContent="space-evenly">
-              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("Contact")}>Contact</Button>
-              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("Projects")}>Projects</Button>
+              <Button variant="outlined" color="info" size="medium" onClick={() => this.props.onClick("Contact")}>Contact</Button>
+              <Button variant="outlined" color="info" size="medium" onClick={() => this.props.onClick("Projects")}>Projects</Button>
             </Stack>
           </Stack>
         </div>
