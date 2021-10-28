@@ -608,13 +608,18 @@ const MultiTextWithImage = ({ input, isError, hasBuffer, elementType }) => /*#__
     {
       return (
         <div>
-          <h3>Terminal Mode with keyboard input is not supported on mobile devices. Switch to desktop for keyboard input. Or use the links to navigate through the information</h3>
-          <Stack direction="row" spacing={1}>
-            <Button variant="outlined" size="small" onClick={() => this.props.onClick("About")}>About</Button>
-            <Button variant="outlined" size="small" onClick={() => this.props.onClick("Experience")}>Experience</Button>
-            <Button variant="outlined" size="small" onClick={() => this.props.onClick("Skills")}>Skills</Button>
-            <Button variant="outlined" size="small" onClick={() => this.props.onClick("Contact")}>Contact</Button>
-            <Button variant="outlined" size="small" onClick={() => this.props.onClick("Projects")}>Projects</Button>
+          <h3>Terminal Mode with keyboard input is not supported on mobile devices. Switch to desktop for keyboard input. Or use the tabs below to navigate through the information</h3>
+          <Stack spacing={1}>
+            <Stack direction="row" spacing={1} justifyContent="space-evenly">
+              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("About")}>About</Button>
+              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("Experience")}>Experience</Button>
+              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("Skills")}>Skills</Button>
+            </Stack>
+
+            <Stack direction="row" justifyContent="space-evenly">
+              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("Contact")}>Contact</Button>
+              <Button variant="outlined" size="medium" onClick={() => this.props.onClick("Projects")}>Projects</Button>
+            </Stack>
           </Stack>
         </div>
         );
