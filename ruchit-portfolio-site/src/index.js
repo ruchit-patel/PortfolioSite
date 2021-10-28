@@ -1,6 +1,14 @@
 import React, { createElement } from 'react';
 import ReactDOM from 'react-dom';
-import {evaluate} from 'mathjs';
+import {evaluate, sec} from 'mathjs';
+import Typewriter from 'typewriter-effect/dist/core';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import { Button, CardActionArea, CardActions } from '@mui/material';
 import './index.css';
 
 const App = () => {
@@ -134,7 +142,8 @@ const App = () => {
           fieldHistory: [...state.fieldHistory, { isCommand: true }, {
             text: `Terminal Mode with keyboard input is not supported on mobile devices. Switch to desktop for keyboard input. Or use the links to navigate through the information`,
             isError: true,
-            hasBuffer: true }] }));
+            hasBuffer: true,
+            elementType: "mobile" }] }));
   
   
       }
@@ -329,7 +338,7 @@ const App = () => {
         return this.setState(state => ({
           fieldHistory: [...state.fieldHistory, {
             hasBuffer: true,
-            isReactJSXForm: "about" }] }));
+            elementType: "about" }] }));
   
       } else if (cmd === 'experience') {
         return this.setState(state => ({
@@ -490,7 +499,7 @@ const App = () => {
   
     render() {
       const { theme } = this.props;
-      const { fieldHistory, userInput } = this.state;
+      const { fieldHistory, userInput,isMobile } = this.state;
   
       return /*#__PURE__*/React.createElement("div", {
         id: "field",
@@ -500,12 +509,16 @@ const App = () => {
         tabIndex: 0,
         onContextMenu: e => this.handleContextMenuPaste(e) },
   
-      fieldHistory.map(({ text, isCommand, isError, hasBuffer, isReactJSXForm }) => {
-        if(isReactJSXForm)
+      fieldHistory.map(({ text, isCommand, isError, hasBuffer, elementType }) => {
+        if(elementType)
         {
+          if(elementType==="mobile"){
+            return null;//<MobileRender onClick={(sectionToLoad) => this.handleClick(sectionToLoad)} />;
+          }
+          //else{
            return /*#__PURE__*/(
-            React.createElement(MultiTextWithImage, { input: text, isError: isError, hasBuffer: hasBuffer, elementType: isReactJSXForm}));
-          //return React.createElement(this.About());
+            React.createElement(MultiTextWithImage, { input: text, isError: isError, hasBuffer: hasBuffer, elementType: elementType}));
+           //}
         }
         if (Array.isArray(text)) {
           return /*#__PURE__*/React.createElement(MultiText, { input: text, isError: isError, hasBuffer: hasBuffer });
@@ -513,9 +526,19 @@ const App = () => {
   
         return /*#__PURE__*/React.createElement(Text, { input: text, isCommand: isCommand, isError: isError, hasBuffer: hasBuffer });
       }), /*#__PURE__*/
-      React.createElement(UserText, { input: userInput, theme: theme.cursor }));
+      isMobile===true?<MobileRender onClick={(sectionToLoad) => this.handleClick(sectionToLoad)}/> : React.createElement(UserText, { input: userInput, theme: theme.cursor }));
   
-    }}
+    }
+    handleClick(sectionToLoad)
+    {
+      this.setState(state => ({
+        commandHistory: sectionToLoad === '' ? state.commandHistory : [sectionToLoad, ...state.commandHistory],
+        commandHistoryIndex: 0,
+        fieldHistory: [...state.fieldHistory, { text: sectionToLoad, isCommand: true }],
+        userInput: '' }),
+      () => this.handleInputEvaluation(sectionToLoad));
+    }
+  }
   
   const Text = ({ input, isCommand, isError, hasBuffer }) => /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/
   React.createElement("div", null,
@@ -528,14 +551,6 @@ const App = () => {
   input.map(s => /*#__PURE__*/React.createElement(Text, { input: s, isError: isError })),
   hasBuffer && /*#__PURE__*/React.createElement("div", null));
   
-//   const MultiTextWithImage = ({ input, isError, hasBuffer }) => /*#__PURE__*/React.createElement(React.Fragment, null,
-//     input.map(s => /*#__PURE__*/React.createElement(Text, { input: s, isError: isError })),
-//     hasBuffer && /*#__PURE__*/React.createElement("div", null), React.createElement("img", {
-//       src: input.at(-1),
-//       alt: "image"
-//       // any other image attributes you need go here
-//     }, null));
-  
 const MultiTextWithImage = ({ input, isError, hasBuffer, elementType }) => /*#__PURE__*/React.createElement(MultiMediaRenderer,{elementType: elementType},
     hasBuffer && /*#__PURE__*/React.createElement("div", null));
 
@@ -544,34 +559,67 @@ const MultiTextWithImage = ({ input, isError, hasBuffer, elementType }) => /*#__
   React.createElement("span", null, input), /*#__PURE__*/
   React.createElement("div", { id: "cursor", style: theme }));
   
-  
-  ReactDOM.render( /*#__PURE__*/React.createElement(App, null), document.querySelector('#root'));
-  
   class MultiMediaRenderer extends React.Component {
     render()
     {
         if(this.props.elementType=="about")
         {
             return (
-            <div>
-                <h1>Hey there! I'm Ruchit</h1>
-                <h2>A software engineer from Vadodara, India with expertise in dotnet Core web applications.</h2>
-                <h2> I am a tech enthusiast and a curious learner for life. As a full time software engineer i work with Allscripts India, and currently ready to work with you on any freelance projects.</h2>
-                <img src="./resources/pp.jfif" alt="My Photo" /><br/>
-                <a href="./resources/RuchitResume.pdf" target="_blank">Have a look at my resume here!</a>
-            </div>);
-        }
-        else if(this.props.elementType=="experience")
-        {
-            return (
-            <div>
-                <h1>Hey there! I'm Ruchit</h1>
-                <h2>A software engineer from Vadodara, India with expertise in dotnet Core web applications.</h2>
-                <h2> I am a tech enthusiast and a curious learner for life. As a full time software engineer i work with Allscripts India, and currently ready to work with you on any freelance projects.</h2>
-                <img src="./resources/pp.jfif" alt="My Photo" /><br/>
-                <a href="./resources/RuchitResume.pdf" target="_blank">Have a look at my resume here!</a>
-            </div>);
+              <Grid
+                    container
+                    spacing={0}
+                    direction="column"
+                    alignItems="center"
+                    justify="center">
+
+                <Grid item xs={3}> 
+                    <Card sx={{ maxWidth: 700 }}>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="700"
+                        image="./resources/pp.jpeg"
+                        alt="ruchit image"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                        Hey there! I'm Ruchit Patel
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          A software engineer from Vadodara, India with expertise in dotnet Core web applications.
+                          I am a tech enthusiast and a curious learner for life. As a full time software engineer i work with Allscripts India, and currently ready to work with you on any freelance projects.
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <Button href="./resources/RuchitResume.pdf" target="_blank"  size="small" color="primary">
+                        Get Resume!
+                      </Button>
+                    </CardActions>
+                    </Card>
+                  </Grid>      
+                </Grid>);
         }
     }
   }
+
+  class MobileRender extends React.Component {
+    render()
+    {
+      return (
+        <div>
+          <h3>Terminal Mode with keyboard input is not supported on mobile devices. Switch to desktop for keyboard input. Or use the links to navigate through the information</h3>
+          <Stack direction="row" spacing={1}>
+            <Button variant="outlined" size="small" onClick={() => this.props.onClick("About")}>About</Button>
+            <Button variant="outlined" size="small" onClick={() => this.props.onClick("Experience")}>Experience</Button>
+            <Button variant="outlined" size="small" onClick={() => this.props.onClick("Skills")}>Skills</Button>
+            <Button variant="outlined" size="small" onClick={() => this.props.onClick("Contact")}>Contact</Button>
+            <Button variant="outlined" size="small" onClick={() => this.props.onClick("Projects")}>Projects</Button>
+          </Stack>
+        </div>
+        );
+    }
+  }
+    
+  ReactDOM.render( /*#__PURE__*/React.createElement(App, null), document.querySelector('#root'));
   
