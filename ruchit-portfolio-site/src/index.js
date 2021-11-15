@@ -424,7 +424,7 @@ const App = () => {
             live: 'https://billingnextsys.azurewebsites.net' },
           {
             title: 'QuotationGen',
-            live: 'https://billingnextquotation.azurewebsites.net' },
+            live: 'https://quotationgen.azurewebsites.net' },
           {
             title: 'NUVAdmissionSystem',
             live: 'https://github.com/Amorpheuz/AdmissionSysMain' },
