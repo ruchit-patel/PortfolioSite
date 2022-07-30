@@ -571,7 +571,7 @@ const MultiTextWithImage = ({ input, isError, hasBuffer, elementType }) => /*#__
                       <CardMedia
                         component="img"
                         height="700"
-                        image="./resources/pp.jpg"
+                        image="./resources/pp.JPG"
                         alt="ruchit image"
                       />
                       <CardContent>
